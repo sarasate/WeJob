@@ -1,0 +1,12 @@
+---
+import Layout from "./Layout.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter?.title}>
+  <div class="prose mx-auto"><slot /></div>
+  <div class="italic text-sm pt-4">
+    Last updated: {frontmatter.date} :: {frontmatter.author}
+  </div>
+</Layout>

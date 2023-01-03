@@ -1,0 +1,35 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import luis from "./sarasate.jpeg";
+---
+
+<Layout title="Luis Höfer">
+  <div class="text-center pt-36">
+    <div class="w-60 m-auto">
+      <img class="mask mask-squircle" src={luis} alt="Luis Höfer" />
+    </div>
+    <div class="text-4xl py-4">Luis Höfer</div>
+    <div class="text-xl py-4">CTO, Tech Advisor, Personal Trainer, Mentor</div>
+    <code class="skills">
+      JS, TS, NodeJS, NestJS, React, React Native, VueJS, GatsbyJS, ++
+    </code>
+    <div class="social">
+      <a
+        href="https://www.linkedin.com/in/luishoefer"
+        target="_blank"
+        class="link link-hover pr-4"
+      >
+        <i class="ri-links-line"></i>
+        LinkedIn</a
+      >
+      <a
+        href="https://www.github.com/sarasate"
+        target="_blank"
+        class="link link-hover"
+      >
+        <i class="ri-links-line"></i>
+        GitHub</a
+      >
+    </div>
+  </div>
+</Layout>
