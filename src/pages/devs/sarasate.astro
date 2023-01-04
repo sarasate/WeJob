@@ -1,6 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import luis from "./sarasate.jpeg";
+
+const skills = [
+  ["JavaScript", 9],
+  ["TypeScript", 5],
+  ["MeteorJS", 10],
+  ["CSS", 7],
+  ["HTML", 10],
+];
+const MAX_RATING = 10;
 ---
 
 <Layout title="Luis Höfer">
@@ -8,7 +17,7 @@ import luis from "./sarasate.jpeg";
     <div class="w-60 m-auto">
       <img class="mask mask-squircle" src={luis} alt="Luis Höfer" />
     </div>
-    <div class="text-4xl py-4">Luis Höfer</div>
+    <h1 class="text-4xl py-4">Luis Höfer</h1>
     <div class="text-xl py-4">CTO, Tech Advisor, Personal Trainer, Mentor</div>
     <code class="skills">
       JS, TS, NodeJS, NestJS, React, React Native, VueJS, GatsbyJS, ++
@@ -30,6 +39,24 @@ import luis from "./sarasate.jpeg";
         <i class="ri-links-line"></i>
         GitHub</a
       >
+    </div>
+    <h2 class="font-bold text-lg pt-4">Skills</h2>
+
+    <div class="flex flex-col max-w-md m-auto">
+      {
+        skills.map((skill) => (
+          <div class="flex flex-row justify-between">
+            <div>{skill[0]}: </div>
+            <div>
+              <progress
+                class="progress progress-secondary w-56"
+                value={skill[1]}
+                max={MAX_RATING}
+              />
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </Layout>
