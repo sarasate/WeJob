@@ -12,5 +12,19 @@ export default defineConfig({
   server: {
     port: 9000,
   },
-  integrations: [tailwind(), sitemap()],
+  integrations: [
+    tailwind(),
+    sitemap({
+      changefreq: "weekly",
+      priority: 0.7,
+      serialize(item) {
+        if (/dev/.test(item.url) || /jobs/.test(item.url)) {
+          item.changefreq = "daily";
+          item.lastmod = new Date();
+          item.priority = 1.0;
+        }
+        return item;
+      },
+    }),
+  ],
 });
