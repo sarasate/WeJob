@@ -1,12 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Card from "../../components/Card.astro";
+import JobCard from "../../components/JobCard.astro";
 ---
 
-<Layout>
+<Layout title="Jobs">
   <div class="text-lg font-bold pb-4">Open Jobs</div>
-  <Card
+  <JobCard
     title="Experienced JavaScript Developer @ Lawlift"
+    location="Berlin"
+    type="full-time"
+    kind="hybrid"
     href="/jobs/lawlift/javascript-developer"
   />
 </Layout>

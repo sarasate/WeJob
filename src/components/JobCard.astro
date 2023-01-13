@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  location: string;
+  type: "full-time" | "part-time" | "contract" | "internship";
+  kind: "remote" | "onsite" | "hybrid";
+  href: string;
+}
+
+const { href, title, location, type, kind } = Astro.props;
+---
+
+<li class="card bg-base-100 shadow-2xl">
+  <a href={href} class="card-body">
+    <h2 class="card-title">
+      {title}
+    </h2>
+    <p>
+      {location ? location : ""}
+      <span class="badge">{type}</span>
+      <span class="badge badge-secondary">{kind}</span>
+    </p>
+  </a>
+</li>

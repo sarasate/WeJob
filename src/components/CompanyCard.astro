@@ -1,0 +1,21 @@
+---
+export interface Props {
+  title: string;
+  body: string;
+  location: string;
+  href: string;
+}
+
+const { href, title, location } = Astro.props;
+---
+
+<li class="card bg-base-100 shadow-2xl">
+  <a href={href} class="card-body">
+    <h2 class="card-title">
+      {title}
+    </h2>
+    <p>
+      {location ? location : ""}
+    </p>
+  </a>
+</li>
