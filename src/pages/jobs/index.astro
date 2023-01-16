@@ -8,10 +8,10 @@ const jobs = [
     location: "Berlin",
     type: "full-time",
     kind: "hybrid",
-    href: "/jobs/lawlift/javascript-developer",
+    href: "/jobs/lawlift/senior-js-developer",
   },
   {
-    title: "Senior JavaScript Developer @ Lawlift",
+    title: "Experienced JavaScript Developer @ Lawlift",
     location: "Berlin",
     type: "full-time",
     kind: "hybrid",
@@ -26,6 +26,7 @@ const jobs = [
     jobs.map((job) => (
       <JobCard
         title={job.title}
+        href={job.href}
         location={job.location}
         type={job.type}
         kind={job.kind}
