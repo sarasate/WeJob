@@ -7,24 +7,24 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
+import vue from "@astrojs/vue";
+
+// https://astro.build/config
 export default defineConfig({
   site: "https://wejob.tech",
   server: {
-    port: 9000,
+    port: 9000
   },
-  integrations: [
-    tailwind(),
-    sitemap({
-      changefreq: "weekly",
-      priority: 0.7,
-      serialize(item) {
-        if (/dev/.test(item.url) || /jobs/.test(item.url)) {
-          item.changefreq = "daily";
-          item.lastmod = new Date();
-          item.priority = 1.0;
-        }
-        return item;
-      },
-    }),
-  ],
+  integrations: [tailwind(), sitemap({
+    changefreq: "weekly",
+    priority: 0.7,
+    serialize(item) {
+      if (/dev/.test(item.url) || /jobs/.test(item.url)) {
+        item.changefreq = "daily";
+        item.lastmod = new Date();
+        item.priority = 1.0;
+      }
+      return item;
+    }
+  }), vue()]
 });
