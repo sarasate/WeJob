@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/main.layout.astro";
+import luis from "../../images/luishoefer.jpeg";
+import { Image } from "astro:assets";
+
+const skills = [
+  "JacaScript",
+  "TypeScript",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+];
+---
+
+<Layout title="Luis Höfer">
+  <div class="flex flex-col gap-4">
+    <div class="w-60 rounded">
+      <Image class="mask mask-squircle" src={luis} alt="Luis Höfer" />
+    </div>
+    <h1 class="text-2xl font-medium">Luis Höfer</h1>
+    <div class="flex flow-row gap-4">
+      {
+        skills.map((skill) => {
+          return (
+            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+              {skill}
+            </span>
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>

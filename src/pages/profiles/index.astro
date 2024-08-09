@@ -1,0 +1,31 @@
+---
+import HowTo from "../../components/how-to.astro";
+import Layout from "../../layouts/main.layout.astro";
+
+const profiles = [
+  {
+    name: "Luis Höfer",
+    path: "/profiles/luis-hoefer",
+  },
+];
+---
+
+<Layout title="Index">
+  <HowTo />
+  <div class="font-medium text-xl">Profiles</div>
+  {
+    profiles.map((profile) => {
+      return (
+        <div class="border border-gray-200 rounded p-4 mt-4">
+          <a
+            href="/profiles/luis-hoefer"
+            class="text-xl font-semibold text-gray-800"
+          >
+            {profile.name}
+          </a>
+          <div class="mt-2 flex flex-wrap gap-2" />
+        </div>
+      );
+    })
+  }
+</Layout>
