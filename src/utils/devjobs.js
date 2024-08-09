@@ -1,13 +1,6 @@
 import axios from "axios";
 import fs from "fs";
 
-// Fetch Data from the depjobs APi with thisq query:
-// curl --location 'https://api.apijobs.dev/v1/job/search' \
-// --header 'apikey: bc36c9a4598f8d05950fe6665af56ad6781a6b3b9369d1e9dddbdffa92c56de4' \ --header 'Content-Type: application/json' \
-// --data '{
-//   "q" : "Reactjs"
-// }'
-// and store the data in a file called jobs.json
 const fetchData = async () => {
   try {
     const response = await axios.post(
@@ -17,8 +10,7 @@ const fetchData = async () => {
       },
       {
         headers: {
-          apikey:
-            "bc36c9a4598f8d05950fe6665af56ad6781a6b3b9369d1e9dddbdffa92c56de4",
+          apikey: process.env.APIJOBS_API_KEY,
           "Content-Type": "application/json",
         },
       }
