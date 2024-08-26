@@ -4,20 +4,19 @@ import Layout from "../layouts/main.layout.astro";
 
 <Layout title="WeJob ">
   <div class="container mx-auto text-center">
-    <hjkk2 class="text-3xl font-semibold mt-20">WeJob - Open Job Platform</hjkk2
-    >
+    <h2 class="text-3xl font-semibold mt-20">WeJob - Open Job Platform</h2>
     <p class="mt-4">
       Why are simple job postings so expensive? Just add your developer profile
       or job offer on your own (via github pull request) and get hosted for
       free.
     </p>
   </div>
-  <div class="flex flex-row mt-8">
-    <div class="w-1/2">
-      <a href="/profiles" class="text-2xl font-semibold mt-8">For Developers</a>
+  <div class="flex flex-row gap-4 mt-8 justify-center items-center">
+    <div class="flex-1 flex justify-center">
+      <a href="/profiles" class="btn text-center">For Developers</a>
     </div>
-    <div class="w-1/2">
-      <a href="jobs" class="text-2xl font-semibold mt-8">For Companies</a>
+    <div class="flex-1 flex justify-center">
+      <a href="jobs" class="btn text-center">For Companies</a>
     </div>
   </div>
 </Layout>
