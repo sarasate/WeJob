@@ -13,10 +13,10 @@ import HowTo from "../components/how-to.astro";
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {
-          data.hits.map((job, index) => (
+          data.hits.map((job) => (
             <div class="border border-gray-200 rounded p-4">
               <a
-                href={`/jobs/${index}`}
+                href={`/jobs/${job.id}`}
                 class="text-xl font-semibold text-gray-800 hover:text-blue-600"
               >
                 {job.title}

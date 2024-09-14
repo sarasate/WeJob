@@ -3,8 +3,8 @@ import Layout from "../../layouts/main.layout.astro";
 import data from "../../data/jobs.json";
 
 export function getStaticPaths() {
-  return data.hits.map((job, index) => ({
-    params: { id: index.toString() },
+  return data.hits.map((job) => ({
+    params: { id: job.id.toString() },
     props: { job },
   }));
 }
@@ -29,24 +29,19 @@ const { job } = Astro.props;
             class="text-blue-500 hover:underline">{job.websiteName}</a
           >
         </p>
-        <p><strong>Job Type:</strong> {job.jobType}</p>
-        <p><strong>Salary:</strong> {job.salary || "--"}</p>
-        <p><strong>Experience:</strong> {job.experience}</p>
-        <p>
-          <strong>Employment Type:</strong>
-          {job.employment_type}
-        </p>
+        <p><strong>Job Type:</strong> {job.employment_type || "--"}</p>
+        <p><strong>Salary:</strong> {job.baseSalaryType || "--"}</p>
       </div>
       <div class="mb-6">
         <h2 class="text-2xl font-semibold mb-2">Description</h2>
-        <p class="">{job.description}</p>
+        <p>{job.description}</p>
       </div>
       {
         job.skills && job.skills.length > 0 && (
           <div class="mb-6">
             <h2 class="text-2xl font-semibold mb-2">Skills</h2>
             <ul class="list-disc list-inside">
-              {job.skills.map((skill) => (
+              {job.skills?.split(",").map((skill: string) => (
                 <li>{skill}</li>
               ))}
             </ul>
