@@ -2,7 +2,7 @@
 import Layout from "../layouts/main.layout.astro";
 ---
 
-<Layout title="WeJob">
+<Layout title="WeJob - Open Job Platform">
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-semibold mt-20">WeJob - Open Job Platform</h2>
     <p class="mt-4">
@@ -11,12 +11,16 @@ import Layout from "../layouts/main.layout.astro";
       free.
     </p>
   </div>
-  <div class="flex flex-row gap-4 mt-8 justify-center items-center">
+  <div
+    class="flex flex-col sm:flex-row gap-6 mt-12 justify-center items-center"
+  >
     <div class="flex-1 flex justify-center">
-      <a href="/profiles" class="btn text-center">For Developers</a>
+      <a href="/profiles" class="btn btn-primary btn-lg w-64 text-lg">
+        For Developers
+      </a>
     </div>
     <div class="flex-1 flex justify-center">
-      <a href="jobs" class="btn text-center">For Companies</a>
+      <a href="/jobs" class="btn btn-lg w-64 text-lg"> For Companies </a>
     </div>
   </div>
 </Layout>
