@@ -4,59 +4,29 @@ import Layout from "../layouts/main.layout.astro";
 import HowTo from "../components/how-to.astro";
 ---
 
-<!-- {data.hits[0].website} -->
 <Layout title="WeJob - Job Offers">
   <main class="container mx-auto mt-8 px-4">
     <HowTo />
-    <section
-      class="border border-gray-200 rounded-lg shadow-sm p-6"
-      x-data="{ openings: [
-        { title: 'Frontend Developer', skills: ['React', 'TypeScript', 'Tailwind CSS'] },
-        { title: 'Backend Developer', skills: ['Node.js', 'Express', 'MongoDB'] },
-        { title: 'Full Stack Developer', skills: ['React', 'Node.js', 'PostgreSQL'] },
-        { title: 'DevOps Engineer', skills: ['Docker', 'Kubernetes', 'AWS'] }
-    ] }"
-    >
+    <section class="border border-gray-200 rounded-lg shadow-sm p-6">
       <h2 class="text-2xl font-semibold mb-4 text-gray-800">
         Current Openings
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {
-          data.hits.map((job) => {
-            return (
-              <div class="border border-gray-200 rounded p-4">
-                <a
-                  href={job.url}
-                  target="_blank"
-                  class="text-xl font-semibold text-gray-800"
-                >
-                  {job.title}
-                </a>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  {job.city}
-                  {/* <template x-for="skill in job.skills" :key="skill">
-                <span
-                  class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
-                  x-text="skill"></span>
-              </template> */}
-                </div>
+          data.hits.map((job, index) => (
+            <div class="border border-gray-200 rounded p-4">
+              <a
+                href={`/jobs/${index}`}
+                class="text-xl font-semibold text-gray-800 hover:text-blue-600"
+              >
+                {job.title}
+              </a>
+              <div class="mt-2">
+                <span class="text-gray-600">{job.city}</span>
               </div>
-            );
-          })
-        }
-        <!-- <template x-for="job in data.hits" :key="job.websiteName">
-          <div class="border border-gray-200 rounded p-4">
-            <h3 class="text-xl font-semibold text-gray-800" x-text="job.title">
-            </h3>
-            <div class="mt-2 flex flex-wrap gap-2">
-              <template x-for="skill in job.skills" :key="skill">
-                <span
-                  class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
-                  x-text="skill"></span>
-              </template>
             </div>
-          </div>
-        </template> -->
+          ))
+        }
       </div>
     </section>
   </main>

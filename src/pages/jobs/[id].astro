@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/main.layout.astro";
+import data from "../../data/jobs.json";
+
+export function getStaticPaths() {
+  return data.hits.map((job, index) => ({
+    params: { id: index.toString() },
+    props: { job },
+  }));
+}
+
+const { job } = Astro.props;
+---
+
+<Layout title={`WeJob - ${job.title}`}>
+  <main class="container mx-auto mt-8 px-4">
+    <div class="border border-gray-200 rounded-lg shadow-sm p-6">
+      <h1 class="text-3xl font-semibold mb-4 text-gray-800">{job.title}</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <p>
+          <strong>Location:</strong>
+          {job.city}, {job.region}, {job.country}
+        </p>
+        <p>
+          <strong>Website:</strong>
+          <a
+            href={job.websiteUrl}
+            target="_blank"
+            class="text-blue-500 hover:underline">{job.websiteName}</a
+          >
+        </p>
+        <p><strong>Job Type:</strong> {job.jobType}</p>
+        <p><strong>Salary:</strong> {job.salary || "--"}</p>
+        <p><strong>Experience:</strong> {job.experience}</p>
+        <p>
+          <strong>Employment Type:</strong>
+          {job.employment_type}
+        </p>
+      </div>
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold mb-2">Description</h2>
+        <p class="">{job.description}</p>
+      </div>
+      {
+        job.skills && job.skills.length > 0 && (
+          <div class="mb-6">
+            <h2 class="text-2xl font-semibold mb-2">Skills</h2>
+            <ul class="list-disc list-inside">
+              {job.skills.map((skill) => (
+                <li>{skill}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      <a
+        href={job.url}
+        target="_blank"
+        class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 inline-block"
+      >
+        Apply Now
+      </a>
+    </div>
+  </main>
+</Layout>
