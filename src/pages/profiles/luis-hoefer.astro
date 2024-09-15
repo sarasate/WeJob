@@ -4,26 +4,54 @@ import luis from "../../images/luishoefer.jpeg";
 import { Image } from "astro:assets";
 
 const skills = [
-  "JacaScript",
+  "JavaScript",
   "TypeScript",
   "React",
-  "TypeScript",
   "Tailwind CSS",
+  "Node.js",
+  "Express",
+];
+
+const socialLinks = [
+  { name: "GitHub", url: "https://github.com/sarasate" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/luishoefer" },
+  { name: "Website", url: "https://luis.hoefer.co" },
+  // { name: "Twitter", url: "https://twitter.com/luishoefer" },
 ];
 ---
 
-<Layout title="Luis Höfer">
-  <div class="flex flex-col gap-4">
-    <div class="w-60 rounded">
-      <Image class="mask mask-squircle" src={luis} alt="Luis Höfer" />
-    </div>
-    <h1 class="text-2xl font-medium">Luis Höfer</h1>
-    <div class="flex flow-row gap-4">
-      {
-        skills.map((skill) => {
-          return <span class="badge badge-lg badge-primary">{skill}</span>;
-        })
-      }
+<Layout title="Luis Höfer - Full Stack Developer">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+      <div class="w-60 rounded-full overflow-hidden">
+        <Image class="w-full h-full object-cover" src={luis} alt="Luis Höfer" />
+      </div>
+      <div class="flex flex-col gap-4">
+        <h1 class="text-3xl font-bold">Luis Höfer</h1>
+        <p class="text-xl text-gray-600">Full Stack Developer</p>
+        <div class="flex flex-wrap gap-2">
+          {
+            skills.map((skill) => (
+              <span class="badge badge-lg badge-primary">{skill}</span>
+            ))
+          }
+        </div>
+        <p class="mt-4 text-gray-700">CTO, Tech Advisor, Mentor, Programmer</p>
+        <div class="flex gap-4 mt-4">
+          {
+            socialLinks.map((link) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-blue-500 hover:text-blue-700"
+              >
+                {link.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
     </div>
   </div>
 </Layout>
