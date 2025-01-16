@@ -1,7 +1,6 @@
 import axios from "axios";
 import fs from "fs";
 
-console.log(process.env.APIJOBS_API_KEY);
 const fetchData = async () => {
   try {
     const response = await axios.post(
