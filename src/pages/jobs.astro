@@ -1,16 +1,12 @@
 ---
-import data from "../data/jobs.json";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/main.layout.astro";
 import HowTo from "../components/how-to.astro";
 
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  city: string;
-  country: string;
-  skills?: string;
-}
+const jobs = await getCollection("jobs");
+
+type Job = CollectionEntry<"jobs">;
 ---
 
 <Layout title="WeJob - Job Offers">
@@ -44,32 +40,29 @@ interface Job {
 
       <div id="jobsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {
-          data.hits.map((job) => (
+          jobs.map((job: Job) => (
             <div
               class="job-card border border-gray-200 rounded p-4"
-              data-title={job.title?.toLowerCase()}
-              data-description={job.description?.toLowerCase()}
-              data-skills={job.skills?.toLowerCase()}
-              data-location={`${job.city?.toLowerCase()} ${job.country?.toLowerCase()}`}
+              data-title={job.data.title?.toLowerCase()}
+              data-description={job.data.description?.toLowerCase()}
+              data-skills={job.data.requirements?.join(",").toLowerCase()}
+              data-location={job.data.location?.toLowerCase()}
             >
               <a
                 href={`/jobs/${job.id}`}
                 class="text-xl font-semibold text-gray-800 hover:text-blue-600"
               >
-                {job.title}
+                {job.data.title}
               </a>
               <div class="mt-2">
-                <span class="text-gray-600">{job.city}</span>
-                {job.skills && (
+                <span class="text-gray-600">{job.data.location}</span>
+                {job.data.requirements && (
                   <div class="mt-2 flex flex-wrap gap-1">
-                    {job.skills
-                      .split(",")
-                      .slice(0, 3)
-                      .map((skill) => (
-                        <span class="text-xs bg-gray-100 rounded px-2 py-1">
-                          {skill.trim()}
-                        </span>
-                      ))}
+                    {job.data.requirements.slice(0, 3).map((skill: string) => (
+                      <span class="text-xs bg-gray-100 rounded px-2 py-1">
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
