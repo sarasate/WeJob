@@ -4,7 +4,10 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/main.layout.astro";
 import HowTo from "../components/how-to.astro";
 
-const jobs = await getCollection("jobs");
+const jobs = (await getCollection("jobs")).sort(
+  (a, b) =>
+    new Date(b.data.postedAt).getTime() - new Date(a.data.postedAt).getTime()
+);
 
 type Job = CollectionEntry<"jobs">;
 ---

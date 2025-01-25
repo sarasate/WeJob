@@ -14,11 +14,13 @@ if (!fs.existsSync(contentDir)) {
 jobsData.hits.forEach((job) => {
   const jobContent = {
     title: job.title,
+    website_url: job.website_url,
+    url: job.url,
     company: job.company || "Unknown Company",
     location: `${job.city}, ${job.country}`,
     description: job.description,
     requirements: job.skills ? job.skills.split(",").map((s) => s.trim()) : [],
-    postedAt: new Date().toISOString(), // You might want to add actual dates
+    postedAt: job.created_at, // You might want to add actual dates
     type: "full-time", // Default value, adjust as needed
     remote: false, // Default value, adjust as needed
   };

@@ -5,6 +5,8 @@ export const collections = {
     type: "data",
     schema: z.object({
       title: z.string(),
+      url: z.string().optional(),
+      website_url: z.string().optional(),
       company: z.string(),
       location: z.string(),
       salary: z.string().optional(),

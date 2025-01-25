@@ -1,15 +1,22 @@
 ---
 import Layout from "../../layouts/main.layout.astro";
-import data from "../../data/jobs.json";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
-export function getStaticPaths() {
-  return data.hits.map((job) => ({
-    params: { id: job.id.toString() },
-    props: { job },
+export async function getStaticPaths() {
+  const jobs = await getCollection("jobs");
+  return jobs.map((entry: CollectionEntry<"jobs">) => ({
+    params: { id: entry.id },
+    props: { job: entry.data, id: entry.id },
   }));
 }
 
-const { job } = Astro.props;
+interface Props {
+  job: CollectionEntry<"jobs">["data"];
+  id: string;
+}
+
+const { job, id } = Astro.props;
 
 // Prepare structured data for the job posting
 const jobStructuredData = {
@@ -17,37 +24,33 @@ const jobStructuredData = {
   "@type": "JobPosting",
   title: job.title,
   description: job.description,
-  datePosted: job.published_since || new Date().toISOString(),
-  validThrough: job.published_until,
-  employmentType: job.employment_type,
+  datePosted: job.postedAt.toISOString(),
+  employmentType: job.type,
   hiringOrganization: {
     "@type": "Organization",
-    name: job.websiteName,
-    sameAs: job.websiteUrl,
+    name: job.company,
   },
   jobLocation: {
     "@type": "Place",
     address: {
       "@type": "PostalAddress",
-      addressLocality: job.city,
-      addressRegion: job.region,
-      addressCountry: job.country,
+      addressLocality: job.location,
     },
   },
-  baseSalary: job.baseSalaryType
+  baseSalary: job.salary
     ? {
         "@type": "MonetaryAmount",
         currency: "USD",
         value: {
           "@type": "QuantitativeValue",
-          value: job.baseSalaryType,
+          value: job.salary,
           unitText: "YEAR",
         },
       }
     : undefined,
 };
 
-const pageDescription = `${job.title} position in ${job.city}, ${job.region}. ${job.description.substring(0, 150)}...`;
+const pageDescription = `${job.title} position at ${job.company} in ${job.location}. ${job.description.substring(0, 150)}...`;
 ---
 
 <Layout title={`${job.title} - WeJob`} description={pageDescription}>
@@ -61,41 +64,66 @@ const pageDescription = `${job.title} position in ${job.city}, ${job.region}. ${
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <p>
           <strong>Location:</strong>
-          {job.city}, {job.region}, {job.country}
+          {job.location}
+          {job.remote && " (Remote)"}
         </p>
         <p>
-          <strong>Website:</strong>
-          <a
-            href={job.websiteUrl}
-            target="_blank"
-            class="text-blue-500 hover:underline">{job.websiteName}</a
-          >
+          <strong>Company:</strong>
+          {job.company}
         </p>
-        <p><strong>Job Type:</strong> {job.employment_type || "--"}</p>
-        <p><strong>Salary:</strong> {job.baseSalaryType || "--"}</p>
+        <p><strong>Job Type:</strong> {job.type || "--"}</p>
+        <p><strong>Salary:</strong> {job.salary || "--"}</p>
+        {
+          job.website_url && (
+            <p>
+              <strong>Original Posting:</strong>
+              <a
+                href={job.website_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-blue-500 hover:text-blue-600"
+              >
+                View on {new URL(job.website_url).hostname}
+              </a>
+            </p>
+          )
+        }
       </div>
       <div class="mb-6">
         <h2 class="text-2xl font-semibold mb-2">Description</h2>
         <p>{job.description}</p>
       </div>
       {
-        job.skills && job.skills.length > 0 && (
+        job.requirements && job.requirements.length > 0 && (
           <div class="mb-6">
-            <h2 class="text-2xl font-semibold mb-2">Skills</h2>
+            <h2 class="text-2xl font-semibold mb-2">Requirements</h2>
             <ul class="list-disc list-inside">
-              {job.skills?.split(",").map((skill: string) => (
-                <li>{skill}</li>
+              {job.requirements.map((req: string) => (
+                <li>{req}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      {
+        job.responsibilities && job.responsibilities.length > 0 && (
+          <div class="mb-6">
+            <h2 class="text-2xl font-semibold mb-2">Responsibilities</h2>
+            <ul class="list-disc list-inside">
+              {job.responsibilities.map((resp: string) => (
+                <li>{resp}</li>
               ))}
             </ul>
           </div>
         )
       }
       <a
-        href={job.url}
-        target="_blank"
+        href={job.url || job.website_url || `/apply/${id}`}
+        target={job.url || job.website_url ? "_blank" : undefined}
+        rel={job.url || job.website_url ? "noopener noreferrer" : undefined}
         class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 inline-block"
       >
-        Apply Now
+        {job.url || job.website_url ? "Apply on Original Site" : "Apply Now"}
       </a>
     </div>
   </main>
