@@ -19,7 +19,9 @@ type Job = CollectionEntry<"jobs">;
       <div
         class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"
       >
-        <h2 class="text-2xl font-semibold text-gray-800">Current Openings</h2>
+        <h2 class="text-2xl font-semibold text-gray-800">
+          Current Openings ({jobs.length})
+        </h2>
         <div class="relative w-full sm:w-auto">
           <input
             type="text"
