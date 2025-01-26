@@ -78,7 +78,7 @@ type Job = CollectionEntry<"jobs">;
 
   <script>
     // Client-side search functionality
-    let searchTimeout: number;
+    let searchTimeout: any;
     const jobCards = document.querySelectorAll(".job-card");
 
     function handleSearch(event: Event) {
