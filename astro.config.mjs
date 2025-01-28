@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://wejob.dev",
+  site: "https://wejob.tech",
   integrations: [tailwind(), sitemap()],
   // Generate sitemap
   sitemap: true,
