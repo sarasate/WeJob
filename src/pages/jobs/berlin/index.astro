@@ -1,0 +1,121 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Layout from "../../../layouts/main.layout.astro";
+const allJobs = await getCollection("jobs");
+const berlinJobs = allJobs
+  .filter((job) => job.data.location?.toLowerCase().includes("berlin"))
+  .sort(
+    (a, b) =>
+      new Date(b.data.postedAt).getTime() - new Date(a.data.postedAt).getTime()
+  );
+type Job = CollectionEntry<"jobs">;
+---
+
+<Layout title="WeJob - Berlin Jobs">
+  <main class="container mx-auto mt-8 px-4">
+    <section class="border border-gray-200 rounded-lg shadow-sm p-6">
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"
+      >
+        <h2 class="text-2xl font-semibold text-gray-800">
+          Berlin Jobs ({berlinJobs.length})
+        </h2>
+        <a href="/jobs" class="text-blue-600 hover:text-blue-800">
+          View All Jobs
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {
+          berlinJobs.map((job: Job) => (
+            <a
+              href={`/jobs/berlin/${job.id}`}
+              class="job-card border border-gray-200 rounded p-4 hover:shadow-md transition-shadow duration-200"
+            >
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                {job.data.title}
+              </h3>
+              <div class="text-sm text-gray-600 space-y-1">
+                {job.data.company && (
+                  <p class="flex items-center">
+                    <svg
+                      class="w-4 h-4 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      />
+                    </svg>
+                    {job.data.company}
+                  </p>
+                )}
+                {job.data.location && (
+                  <p class="flex items-center">
+                    <svg
+                      class="w-4 h-4 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    {job.data.location}
+                  </p>
+                )}
+                {job.data.type && (
+                  <p class="flex items-center">
+                    <svg
+                      class="w-4 h-4 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    {job.data.type}
+                  </p>
+                )}
+              </div>
+              <time
+                datetime={job.data.postedAt}
+                class="block text-sm text-gray-500 mt-2"
+              >
+                Posted: {new Date(job.data.postedAt).toLocaleDateString()}
+              </time>
+            </a>
+          ))
+        }
+      </div>
+
+      {
+        berlinJobs.length === 0 && (
+          <div class="text-center py-8">
+            <p class="text-gray-600">No jobs in Berlin currently available.</p>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</Layout>
